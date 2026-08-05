@@ -14,3 +14,8 @@
 ## 推送
 
 已推送至 GitHub.
+## Release
+
+- APK: [app-release.apk](app/build/outputs/apk/release/app-release.apk)
+- Version: v1.0.0
+- Date: 2026-08-05
