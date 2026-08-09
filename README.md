@@ -45,10 +45,12 @@ Bekobox 是基于 Bettbox 的 Mihomo/Clash Meta 客户端分支，目标是在�
 ```bash
 flutter pub get
 dart setup.dart android --arch universal --out core-only
-flutter build apk --release
+flutter build apk --release --split-per-abi --obfuscate --split-debug-info=build/symbols/android
 ```
 
 `dart setup.dart android --arch universal --out core-only` 会生成 Android 所需的 `libclash.so`。如果跳过这一步，APK 可能缺少核心库并卡在启动阶段。
+
+发布到 GitHub Release 时优先上传分架构小包，不建议上传通用 APK。大多数近几年的 Android 手机下载 `arm64-v8a` 版本即可；很旧的 32 位手机使用 `armeabi-v7a`，模拟器或少量 x86 设备使用 `x86_64`。
 
 真实 APK 应该由 Flutter/Gradle 构建生成，并上传到 GitHub Release。不要把 `app/build/outputs/` 里的占位文件作为源码提交。
 
