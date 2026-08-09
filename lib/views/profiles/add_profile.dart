@@ -61,10 +61,15 @@ class AddProfileView extends StatelessWidget {
         return;
       }
 
+      if (NodeImporter.hasImportableNodes(text)) {
+        await globalState.appController.addProfileFromNodeText(text);
+        return;
+      }
+
       if (!text.isUrl) {
         if (context.mounted) {
           context.showSnackBar(
-            appLocalizations.urlTip(appLocalizations.clipboard),
+            '剪贴板中没有有效订阅链接或支持的节点链接',
           );
         }
         return;
@@ -86,6 +91,10 @@ class AddProfileView extends StatelessWidget {
     final url = await BaseNavigator.push(context, const ScanPage());
     if (url != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (NodeImporter.hasImportableNodes(url)) {
+          globalState.appController.addProfileFromNodeText(url);
+          return;
+        }
         _handleAddProfileFormURL(url);
       });
     }
@@ -95,10 +104,20 @@ class AddProfileView extends StatelessWidget {
     _handleAddProfileFormURL('');
   }
 
+  Future<void> _addBlankProfile() async {
+    await globalState.appController.addBlankProfile();
+  }
+
   @override
   Widget build(context) {
     return ListView(
       children: [
+        ListItem(
+          leading: const Icon(Icons.note_add_outlined),
+          title: const Text('空白配置'),
+          subtitle: const Text('创建一个本地配置，可手动粘贴或修改节点信息'),
+          onTap: _addBlankProfile,
+        ),
         ListItem(
           leading: const Icon(Icons.qr_code_sharp),
           title: Text(appLocalizations.qrcode),
@@ -108,7 +127,7 @@ class AddProfileView extends StatelessWidget {
         ListItem(
           leading: const Icon(Icons.content_paste),
           title: Text(appLocalizations.clipboard),
-          subtitle: Text(appLocalizations.clipboardDesc),
+          subtitle: const Text('从剪贴板导入订阅链接、单节点或多节点'),
           onTap: _handleAddProfileFromClipboard,
         ),
         ListItem(

@@ -1444,6 +1444,60 @@ class AppController {
     }
   }
 
+  Future<void> addBlankProfile() async {
+    _ref.read(loadingProvider.notifier).value = true;
+    try {
+      final profile = await Profile.normal(
+        label: '空白配置',
+      ).saveFileWithString(NodeImporter.blankProfileContent());
+      await addProfile(profile);
+      await savePreferences();
+      if (globalState.navigatorKey.currentState?.canPop() ?? false) {
+        globalState.navigatorKey.currentState?.popUntil(
+          (route) => route.isFirst,
+        );
+      }
+      toProfiles();
+    } on Object catch (e) {
+      await globalState.showMessage(
+        title: appLocalizations.add,
+        message: TextSpan(text: _formatErrorMessage(e)),
+        cancelable: false,
+      );
+    } finally {
+      _ref.read(loadingProvider.notifier).value = false;
+    }
+  }
+
+  Future<void> addProfileFromNodeText(String text) async {
+    _ref.read(loadingProvider.notifier).value = true;
+    try {
+      final imported = NodeImporter.fromText(text);
+      final profile = await Profile.normal(
+        label: imported.label,
+      ).saveFileWithString(imported.content);
+      await addProfile(profile);
+      await savePreferences();
+      if (globalState.navigatorKey.currentState?.canPop() ?? false) {
+        globalState.navigatorKey.currentState?.popUntil(
+          (route) => route.isFirst,
+        );
+      }
+      toProfiles();
+      if (context.mounted) {
+        context.showSnackBar('已导入 ${imported.count} 个节点');
+      }
+    } on Object catch (e) {
+      await globalState.showMessage(
+        title: appLocalizations.add,
+        message: TextSpan(text: _formatErrorMessage(e)),
+        cancelable: false,
+      );
+    } finally {
+      _ref.read(loadingProvider.notifier).value = false;
+    }
+  }
+
   Future<void> addProfileFormFile() async {
     final platformFiles = await safeRun(
       () => picker.pickerFiles(
@@ -1501,6 +1555,10 @@ class AppController {
   Future<void> addProfileFormQrCode() async {
     final url = await safeRun(picker.pickerConfigQRCode);
     if (url == null) return;
+    if (NodeImporter.hasImportableNodes(url)) {
+      addProfileFromNodeText(url);
+      return;
+    }
     addProfileFormURL(url);
   }
 

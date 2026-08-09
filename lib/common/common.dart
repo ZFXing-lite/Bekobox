@@ -22,6 +22,7 @@ export 'mixin.dart';
 export 'navigation.dart';
 export 'navigator.dart';
 export 'network.dart';
+export 'node_importer.dart';
 export 'num.dart';
 export 'package.dart';
 export 'path.dart';

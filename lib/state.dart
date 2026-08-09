@@ -1242,4 +1242,3 @@ class DetectionState {
 }
 
 final detectionState = DetectionState();
-// Added free new blank group, paste single/multi node, modify node info from NekoBox features

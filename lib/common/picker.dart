@@ -87,7 +87,8 @@ class Picker {
       formats: [BarcodeFormat.qrCode],
     );
     final result = capture?.barcodes.first.rawValue;
-    if (result == null || !result.isUrl) {
+    if (result == null ||
+        (!result.isUrl && !NodeImporter.hasImportableNodes(result))) {
       throw appLocalizations.pleaseUploadValidQrcode;
     }
     return result;

@@ -391,6 +391,72 @@ class ProfileItem extends StatelessWidget {
     }
   }
 
+  Future<void> _handleEditNodeConfig(BuildContext context) async {
+    final file = await profile.getFile();
+    var content = '';
+    if (await file.exists()) {
+      content = await file.readAsString();
+    }
+    if (content.trim().isEmpty) {
+      content = NodeImporter.blankProfileContent();
+    }
+    if (!context.mounted) return;
+
+    final title = '节点配置 - ${profile.label ?? profile.id}';
+    final editorPage = EditorPage(
+      title: title,
+      content: content,
+      delayedFocus: true,
+      onSave: (context, _, data) async {
+        try {
+          var updatedProfile = await profile.saveFileWithString(data);
+          if (updatedProfile.type == ProfileType.url) {
+            updatedProfile = updatedProfile.copyWith(autoUpdate: false);
+          }
+          globalState.appController.setProfileAndAutoApply(updatedProfile);
+          await globalState.appController.savePreferences();
+          if (context.mounted) {
+            context.showNotifier('节点配置已保存');
+            Navigator.of(context).pop();
+          }
+        } catch (e) {
+          await globalState.showMessage(
+            title: appLocalizations.tip,
+            message: TextSpan(text: e.formatError),
+            cancelable: false,
+          );
+        }
+      },
+      onPop: (context, _, data) async {
+        if (data == content) return true;
+        final res = await globalState.showMessage(
+          title: title,
+          message: TextSpan(text: appLocalizations.hasCacheChange),
+        );
+        if (res == true && context.mounted) {
+          try {
+            var updatedProfile = await profile.saveFileWithString(data);
+            if (updatedProfile.type == ProfileType.url) {
+              updatedProfile = updatedProfile.copyWith(autoUpdate: false);
+            }
+            globalState.appController.setProfileAndAutoApply(updatedProfile);
+            await globalState.appController.savePreferences();
+            return true;
+          } catch (e) {
+            await globalState.showMessage(
+              title: appLocalizations.tip,
+              message: TextSpan(text: e.formatError),
+              cancelable: false,
+            );
+            return false;
+          }
+        }
+        return true;
+      },
+    );
+    BaseNavigator.push<String>(context, editorPage);
+  }
+
   void _handlePushGenProfilePage(BuildContext context, String id) {
     final overrideProfileView = OverrideProfileView(profileId: id);
     BaseNavigator.push(context, overrideProfileView);
@@ -403,6 +469,13 @@ class ProfileItem extends StatelessWidget {
         label: appLocalizations.edit,
         onPressed: () {
           _handleShowEditExtendPage(context);
+        },
+      ),
+      PopupMenuItemData(
+        icon: Icons.tune,
+        label: '编辑节点配置',
+        onPressed: () {
+          _handleEditNodeConfig(context);
         },
       ),
       if (profile.type == ProfileType.url) ...[

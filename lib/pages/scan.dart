@@ -39,8 +39,10 @@ class _ScanPageState extends State<ScanPage> with WidgetsBindingObserver {
 
   void _handleBarcode(BarcodeCapture barcodeCapture) {
     final barcode = barcodeCapture.barcodes.first;
-    if (barcode.type == BarcodeType.url) {
-      Navigator.pop<String>(context, barcode.rawValue);
+    final value = barcode.rawValue;
+    if (value != null &&
+        (value.isUrl || NodeImporter.hasImportableNodes(value))) {
+      Navigator.pop<String>(context, value);
     } else {
       Navigator.pop(context);
     }
