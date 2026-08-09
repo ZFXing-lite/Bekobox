@@ -63,7 +63,8 @@ Android 分支安装身份：
 
 - 仓库：`https://github.com/ZFXing-lite/Bekobox`
 - Tag 格式：`v<version>`
-- Release 资产：真实构建得到的 `app-release.apk`
+- Release 资产：只上传真实构建得到的 APK 包，不手动上传源码 zip、源码包或其他附加资产。
+- Release 说明：使用中文说明变更、安装身份、安装注意事项和 APK 校验信息。
 
 ## 说明
 
