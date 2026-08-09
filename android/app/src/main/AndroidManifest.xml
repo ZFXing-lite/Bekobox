@@ -24,7 +24,7 @@
         tools:ignore="QueryAllPackagesPermission" />
 
     <application
-        android:name=".BettboxApplication"
+        android:name="com.appshub.bettbox.BettboxApplication"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="bekobox"
@@ -100,7 +100,7 @@
         </activity-alias>
 
         <activity
-            android:name=".TempActivity"
+            android:name="com.appshub.bettbox.TempActivity"
             android:exported="true"
             android:theme="@style/TransparentTheme">
             <intent-filter>
@@ -112,7 +112,7 @@
         </activity>
 
         <service
-            android:name=".services.BettboxTileService"
+            android:name="com.appshub.bettbox.services.BettboxTileService"
             android:exported="true"
             android:icon="@drawable/ic_tile"
             android:label="bekobox"
@@ -127,7 +127,7 @@
         </service>
 
         <provider
-            android:name=".FilesProvider"
+            android:name="com.appshub.bettbox.FilesProvider"
             android:authorities="${applicationId}.files"
             android:exported="true"
             android:grantUriPermissions="true"
@@ -149,7 +149,7 @@
         </provider>
 
         <service
-            android:name=".services.BettboxVpnService"
+            android:name="com.appshub.bettbox.services.BettboxVpnService"
             android:exported="false"
             android:foregroundServiceType="specialUse"
             android:permission="android.permission.BIND_VPN_SERVICE">
@@ -161,14 +161,14 @@
         </service>
 
         <service
-            android:name=".services.BettboxService"
+            android:name="com.appshub.bettbox.services.BettboxService"
             android:exported="false"
             android:foregroundServiceType="specialUse">
             <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="Proxy" />
         </service>
 
         <receiver
-            android:name=".receivers.BootReceiver"
+            android:name="com.appshub.bettbox.receivers.BootReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -176,7 +176,7 @@
         </receiver>
         
         <receiver
-            android:name=".receivers.PackageReplacedReceiver"
+            android:name="com.appshub.bettbox.receivers.PackageReplacedReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />

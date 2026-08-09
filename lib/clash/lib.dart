@@ -63,6 +63,9 @@ class ClashLib extends ClashHandlerInterface with AndroidClashInterface {
       await service?.reconnectIpc();
     }
     commonPrint.log('ClashLib: IPC failed after 3 attempts');
+    if (!_canSendCompleter.isCompleted) {
+      _canSendCompleter.complete(false);
+    }
   }
 
   void _registerMainPort(SendPort sendPort) {

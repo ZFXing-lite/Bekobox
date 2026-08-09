@@ -9,7 +9,7 @@
         android:label="bekobox Debug"
         tools:replace="android:label">
         <service
-            android:name=".services.BettboxTileService"
+            android:name="com.appshub.bettbox.services.BettboxTileService"
             android:label="bekobox Debug"
             tools:replace="android:label"
             tools:targetApi="24" />
