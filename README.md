@@ -53,6 +53,12 @@ flutter build apk --release
 
 当前源码版本：`1.18.9+2026078818`。
 
+Android 分支安装身份：
+
+- 应用显示名称：`bekobox`
+- Android package/applicationId：`com.appshub.bekobox`
+- 可与使用 `com.appshub.bettbox` 的原版 Bettbox 并存安装
+
 发布建议：
 
 - 仓库：`https://github.com/ZFXing-lite/Bekobox`

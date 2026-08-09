@@ -27,7 +27,7 @@
         android:name=".BettboxApplication"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Bettbox"
+        android:label="bekobox"
         android:banner="@drawable/tv_banner"
         android:enableOnBackInvokedCallback="false">
         <activity
@@ -63,6 +63,7 @@
 
                 <data android:scheme="clash" android:host="install-config" />
                 <data android:scheme="clashmeta" android:host="install-config" />
+                <data android:scheme="bekobox" android:host="install-config" />
                 <data android:scheme="bettbox" android:host="install-config" />
             </intent-filter>
         </activity>
@@ -93,6 +94,7 @@
 
                 <data android:scheme="clash" android:host="install-config" />
                 <data android:scheme="clashmeta" android:host="install-config" />
+                <data android:scheme="bekobox" android:host="install-config" />
                 <data android:scheme="bettbox" android:host="install-config" />
             </intent-filter>
         </activity-alias>
@@ -113,7 +115,7 @@
             android:name=".services.BettboxTileService"
             android:exported="true"
             android:icon="@drawable/ic_tile"
-            android:label="Bettbox"
+            android:label="bekobox"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
             tools:targetApi="n">
             <intent-filter>

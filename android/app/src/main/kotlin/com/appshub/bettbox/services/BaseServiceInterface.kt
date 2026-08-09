@@ -54,7 +54,7 @@ suspend fun Service.createBettboxNotificationBuilder(): NotificationCompat.Build
 
         NotificationCompat.Builder(this@createBettboxNotificationBuilder, GlobalState.NOTIFICATION_CHANNEL).apply {
             setSmallIcon(R.drawable.ic)
-            setContentTitle("Bettbox")
+            setContentTitle("bekobox")
             setContentIntent(pendingIntent)
             setCategory(NotificationCompat.CATEGORY_SERVICE)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -73,7 +73,7 @@ fun Service.ensureNotificationChannel() {
     val channel = manager?.getNotificationChannel(GlobalState.NOTIFICATION_CHANNEL)
     if (channel == null || channel.importance != NotificationManager.IMPORTANCE_LOW) {
         manager?.createNotificationChannel(
-            NotificationChannel(GlobalState.NOTIFICATION_CHANNEL, "Bettbox Service", NotificationManager.IMPORTANCE_LOW)
+            NotificationChannel(GlobalState.NOTIFICATION_CHANNEL, "bekobox Service", NotificationManager.IMPORTANCE_LOW)
         )
     }
 }

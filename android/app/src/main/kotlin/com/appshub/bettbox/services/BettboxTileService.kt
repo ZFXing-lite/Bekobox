@@ -29,7 +29,7 @@ class BettboxTileService : TileService() {
             if (GlobalState.isSpeedNotificationEnabled && GlobalState.currentProfileName.isNotEmpty()) {
                 label = GlobalState.currentProfileName
             } else {
-                label = "Bettbox"
+                label = "bekobox"
             }
             updateTile()
         }

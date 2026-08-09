@@ -32,7 +32,7 @@ object GlobalState {
     val runLock = ReentrantLock()
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    const val NOTIFICATION_CHANNEL = "Bettbox"
+    const val NOTIFICATION_CHANNEL = "bekobox"
     const val NOTIFICATION_ID = 1
 
     private const val TOGGLE_DEBOUNCE_MS = 1000L

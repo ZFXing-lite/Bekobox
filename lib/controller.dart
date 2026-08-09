@@ -427,7 +427,7 @@ class AppController {
       final profile = profiles
           .where((e) => e.id == currentProfileId)
           .firstOrNull;
-      final profileName = profile?.label ?? 'Bettbox';
+      final profileName = profile?.label ?? 'bekobox';
       final speedInfo = traffic.toString();
       await vpn_service.service?.updateNotificationSpeed(
         profileName,
